@@ -63,7 +63,7 @@ buttons.forEach((btn) => {
             }
             else if(finished == true)
             {
-                return;
+                btn.disabled = true;
             }
             else{
                 const div = document.createElement('div');
