@@ -1,5 +1,7 @@
 let pwin = 0;
 let cwin = 0;
+let finished = false;
+const container = document.querySelector('div.container'); 
 
 function computerPlay(){
     const choices = ["Rock", "Paper", "Scissors"];
@@ -40,17 +42,37 @@ function playRound(p1, p2)
 }   
 
 function game(){
-    for(let i = 0; i<5; i++)
-    {
-        let response = prompt("Rock, Paper, or Scissors?");
-        console.log(playRound(response, computerPlay()));
-    }
+    
+    const result = document.createElement('div');
     if(pwin>cwin)
-        console.log(`Wow!  You beat the computer with a score of ${pwin} - ${cwin}`);
+    result.textContent = `Wow!  You beat the computer with a score of ${pwin} - ${cwin}`;
     else if(cwin > pwin)
-        console.log(`Aw man.  You lost to the computer.  The score was ${cwin} - ${pwin}`);
+    result.textContent = `Aw man.  You lost to the computer.  The score was ${cwin} - ${pwin}`;
     else
-        console.log(`You and the computer tied!  It was ${pwin} - ${cwin}`);
+    result.textContent = `You and the computer tied!  It was ${pwin} - ${cwin}`;
+    container.appendChild(result);
 }
 
-game();
+const buttons = document.querySelectorAll('button');
+buttons.forEach((btn) => {
+        btn.addEventListener('click', function (e) {
+            if(pwin === 5 || cwin === 5 && finished === false)
+            {
+                game();
+                finished = true;
+            }
+            else if(finished == true)
+            {
+                return;
+            }
+            else{
+                const div = document.createElement('div');
+                div.textContent = playRound(e.target.id, computerPlay());
+                container.appendChild(div);
+            }
+        });
+})
+
+
+
+
